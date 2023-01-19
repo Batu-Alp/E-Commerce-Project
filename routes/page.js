@@ -17,7 +17,7 @@ router.get("/register", (request, response) => {
 
 router.get("/login", (request, response) => {
     response.sendFile("login.html", {root : "./public"});
-})
+}) 
 
 /*
 router.get('/products', function(req, res, next) {

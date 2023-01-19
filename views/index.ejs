@@ -42,6 +42,8 @@
       </div>
     </nav>
 
+    <br><br><br><br>
+
     <div class="container">
         <div class="card" style="width: 100%;">
             <div class="card-body">
@@ -52,52 +54,6 @@
             </div>
           </div>
     </div>
-    <!-- 
-    <% result.forEach(function(item) {%>
-    <div class="products">
-        <div class = "col-xl-4 col-lg-4 col-md-4 col-sm-6 margin">
-            <div class="product-box">
-                <h3><%= item.price %></h3>
-                <span><%= item.name %></span>
-            </div>
-        </div>
-    </div>
-    <% }) %>
--->
-<div class="brand">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="titlepage">
-                    <h2>Products</h2>
-                    <br>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="brand-bg">
-        <div class="container">
-            <div class="row">
-                <% result.forEach(function(item) { %>
-                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 margin">
-                    <div class="brand_box">
-                        <!--<img src="images/1.png" alt="img" />-->
-                        <h3>$<strong class="red"><%= item.price %></strong></h3>
-                        <span><%= item.name %></span>
-                        <br><br><br><br>
-
-                        <!--<i><img src="images/star.png"/></i>
-                        <i><img src="images/star.png"/></i>
-                        <i><img src="images/star.png"/></i>
-                        <i><img src="images/star.png"/></i> -->
-                    </div>
-                </div>
-            <% }) %>
-            
-            </div>
-        </div>
-    </div>
-</div>
-
+   
   </body>
 </html>
