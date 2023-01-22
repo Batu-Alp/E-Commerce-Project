@@ -15,6 +15,11 @@ app.use(bodyParser.urlencoded({extended : true}));
 app.use(session({secret : "secret"}));
 
 const port = 3000;
+/*
+var initial_quantity = db.query("SELECT * FROM products", (err, result) => {
+    response.render("index",  { result : result});
+    console.log(result);
+})*/
 
 function isProductInCart(cart, id) {
 
@@ -116,6 +121,11 @@ app.post('/remove', (request, response) => {
     for(let i = 0; i < cart.length; i++) {
         if (cart[i].id == id) {
             cart.splice(cart.indexOf(i), 1);
+            /*db.query("UPDATE products SET quantity = quantity - ? WHERE id = ?", [1, cart[i].id ], (err, result) => {
+                //response.render("products",  { result : result});
+                console.log(result);
+            })*/
+
         }
     }
 
@@ -124,6 +134,8 @@ app.post('/remove', (request, response) => {
 
 });
 
+var initial_quantity;
+
 app.post('/edit_product_quantity', (request, response) => {
 
     var id = request.body.id;
@@ -131,12 +143,31 @@ app.post('/edit_product_quantity', (request, response) => {
     var increase_btn = request.body.increase_product_quantity;
     var decrease_btn = request.body.decrease_product_quantity;
     var cart = request.session.cart;
+    db.query("SELECT quantity FROM products WHERE id = ?", [id], (err, result) => {
+        //console.log("result : ", result);
+        //console.log("result : ", result[0].quantity);
+        initial_quantity = result[0].quantity;
+
+    });
 
     if (increase_btn) {
         for (let i = 0; i < cart.length; i++) {
             if (cart[i].id == id) {
-                if (cart[i].quantity > 0) {
+
+                //console.log(cart[i].quantity);
+                console.log("initial_quantity : " + initial_quantity);
+
+                if ( initial_quantity < 2) {
+                    console.log("No Stock");
+                    //console.log("cart[i].quantity " + cart[i].quantity);
+                    //console.log("initial_quantity " + initial_quantity);
+
+                }
+                else if (cart[i].quantity > 0) {
                     cart[i].quantity = parseInt(cart[i].quantity) + 1;
+                    db.query("UPDATE products SET quantity = quantity - ? WHERE id = ?", [1, cart[i].id ], (err, result) => {
+                        //console.log(result);
+                    })
                 }
             }
             
@@ -146,8 +177,13 @@ app.post('/edit_product_quantity', (request, response) => {
     if (decrease_btn) {
         for (let i = 0; i < cart.length; i++) {
             if (cart[i].id == id) {
+
+           
                 if (cart[i].quantity > 1) {
                     cart[i].quantity = parseInt(cart[i].quantity) - 1;
+                    db.query("UPDATE products SET quantity = quantity + ? WHERE id = ?", [1, cart[i].id ], (err, result) => {
+                        console.log(result);
+                    })
                 }
             }
             
