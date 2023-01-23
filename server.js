@@ -135,6 +135,7 @@ app.post('/remove', (request, response) => {
 });
 
 var initial_quantity;
+//var user_cash;
 
 app.post('/edit_product_quantity', (request, response) => {
 
